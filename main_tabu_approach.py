@@ -126,7 +126,7 @@ if __name__ == '__main__':
                    './input_data/c_coarse.in.txt',
                    './input_data/d_difficult.in.txt',
                    './input_data/e_elaborate.in.txt']"""
-    input_files = ['./input_data/d_difficult.in.txt']
+    input_files = ['./input_data/c_coarse.in.txt']
 
     for input_file_name in input_files:
         # Parse input file
@@ -146,10 +146,11 @@ if __name__ == '__main__':
             else:
                 optim_starting_point.append(0)
     
-        optimized_candidate = tabu_optim(n_iter             = 10,
-                                         max_tabu_size      = 3, 
-                                         starting_candidate = optim_starting_point,
-                                         parameter_names    = ingredients,
-                                         customers_taste    = customers_taste)
-        
+        optimized_candidate, fitness_optimized_candidate = tabu_optim(n_iter             = 2000,
+                                                                      max_tabu_size      = 50, 
+                                                                      starting_candidate = optim_starting_point,
+                                                                      parameter_names    = ingredients,
+                                                                      customers_taste    = customers_taste)
+        print(f'Fitness based on naive approach: {naive_score}')
+        print(f'Fitness after Tabu optimization: {fitness_optimized_candidate}')                              
         
