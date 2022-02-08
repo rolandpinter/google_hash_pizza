@@ -42,28 +42,30 @@ def tabu_optim(n_iter, max_tabu_size, starting_candidate, parameter_names, custo
     fitness_of_iteration_best_candidate = fitness(starting_candidate, customers_taste, parameter_names)
     fitness_overall_best_candidate      = fitness_of_iteration_best_candidate
     
-    fitness_in_neighborhood, fintess_in_previous_neighborhood = [], []
-    neighborhood, neighborhood_previous                       = [], []
+    fitness_in_neighborhood = []
+    neighborhood            = []
+    
+    already_evaluated_candidates    = []
+    already_computed_fitness_values = []
     
     for iter in range(0, n_iter):
         print(f'Working on iteration {iter}')
-        if iter > 0:
-            fintess_in_previous_neighborhood = deepcopy(fitness_in_neighborhood)
-            neighborhood_previous            = deepcopy(neighborhood)
-            fitness_in_neighborhood          = []
-        
+
         neighborhood = get_neighbors(iteration_best_candidate)
         
         iteration_best_candidate = None
         better_candidate_found   = False
         
         for neighbor in neighborhood:
-            if neighbor in neighborhood_previous:    
-                fitness_of_neighbor = fintess_in_previous_neighborhood[neighborhood_previous.index(neighbor)]
+            if neighbor in already_evaluated_candidates:    
+                fitness_of_neighbor = already_computed_fitness_values[already_evaluated_candidates.index(neighbor)]
                 fitness_in_neighborhood.append(fitness_of_neighbor)
             else:
                 fitness_of_neighbor = fitness(neighbor, customers_taste, parameter_names)
                 fitness_in_neighborhood.append(fitness_of_neighbor)
+                
+                already_evaluated_candidates.append(neighbor)
+                already_computed_fitness_values.append(fitness_of_neighbor)
             
             if (neighbor not in tabu_list) and (fitness_of_neighbor > fitness_of_iteration_best_candidate):
                 iteration_best_candidate = neighbor
