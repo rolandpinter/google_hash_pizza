@@ -257,17 +257,3 @@ if __name__ == '__main__':
                 selected_best_ingredients.append(list(ingredient_weights.keys())[j])
             ratio_of_incoming_customers = compute_customers(customers_taste, selected_best_ingredients)
             print(f'top {i} ingredient selected, customer score: {ratio_of_incoming_customers}')
-            
-        
-        """
-        # Select best ingredients based on naive approach
-        selected_best_ingredients, selected_scores = select_best_ingredients(ingredients, liked_ingredients, disliked_ingredients, C)
-        
-        n_thresholds = [i for i in range(1, len(selected_scores) + 1)]
-        print(len(selected_scores))
-        for n_threshold in n_thresholds:
-            filtered_selected_best_ingredients = choose_top_n(selected_best_ingredients, selected_scores, n_threshold)
-            
-            ratio_of_incoming_customers = compute_customers(customers_taste, filtered_selected_best_ingredients)
-            
-            print(f'threshold for selected top n ingredient: {n_threshold} \t customer come in: {ratio_of_incoming_customers}%')"""
